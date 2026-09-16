@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>جميع المنتجات والتصنيفات - NetZone</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .category-card { background: #1a365d; color: white; padding: 20px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; }
+        .category-card:hover { background: #2563eb; }
+        .cart-badge { background-color: #ef4444; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }
+    </style>
+</head>
+<body onload="updateBadge()">
+<!-- الهيدر الموحد لجميع الصفحات -->
+<header>
+    <div class="logo">NetZone <span>مستلزمات الشبكات</span></div>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="products.html">المنتجات</a>
+        <a href="cart.html">🛒 السلة <span id="header-cart-count" class="cart-badge">0</span></a>
+        <a href="faq.html">الأسئلة الشائعة</a>
+        <a href="contact.html">تواصل معنا</a>
+        <a href="login.html">تسجيل الدخول</a>
+
+    </nav>
+</header>
+
+
+    <div class="container">
+        <h1 class="section-title">اختر التصنيف</h1>
+
+        <!-- قسم التصنيفات للانتقال بين الصفحات -->
+        <div class="categories-grid">
+            <a href="products.html" class="category-card" style="background:#2563eb;">الكل</a>
+            <a href="routers.html" class="category-card">الراوترات</a>
+            <a href="switces.html" class="category-card">السويتشات</a>
+            <a href="cables.html" class="category-card">الكابلات</a>
+            <a href="camera.html" class="category-card">كاميرات المراقبة</a>
+        </div>
+
+        <h2 class="section-title">جميع المنتجات</h2>
+        <br>
+        <div class="grid">
+            <div class="card">
+                <img src="imge/rou3.png" alt="راوتر">
+                <h3>راوتر AC1200</h3>
+                <p>4 منافذ Gigabit</p>
+                <div class="price">300 ريال</div>
+                <button class="btn-main" onclick="addToCart('راوتر AC1200', 300, 'images/router1.jpg')">إضافة إلى السلة</button>
+            </div>
+            <div class="card">
+                <img src="imge/swich2.png" alt="سويتش">
+                <h3>سويتش PoE+</h3>
+                <p>24 منفذ Gigabit</p>
+                <div class="price">1200 ريال</div>
+                <button class="btn-main" onclick="addToCart('سويتش PoE+', 1200, 'images/switch1.jpg')">إضافة إلى السلة</button>
+            </div>
+            <div class="card">
+                <img src="imge/cable1.png" alt="كابل">
+                <h3>كابل Cat6</h3>
+                <p>طول 10 متر</p>
+                <div class="price">50 ريال</div>
+                <button class="btn-main" onclick="addToCart('كابل Cat6', 50, 'images/cable1.jpg')">إضافة إلى السلة</button>
+            </div>
+            <div class="card">
+                <img src="imge/cam3.png" alt="كاميرا">
+                <h3>كاميرا مراقبة 4K</h3>
+                <p>منفذ شبكة PoE</p>
+                <div class="price">450 ريال</div>
+                <button class="btn-main" onclick="addToCart('كاميرا مراقبة 4K', 450, 'images/cam1.jpg')">إضافة إلى السلة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('netzone_cart')) || [];
+
+        function updateBadge() {
+            let total = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('header-cart-count').textContent = total;
+        }
+
+        function addToCart(name, price, img) {
+            let item = cart.find(i => i.name === name);
+            if (item) { item.qty++; } 
+            else { cart.push({ name: name, price: price, image: img, qty: 1 }); }
+            
+            localStorage.setItem('netzone_cart', JSON.stringify(cart));
+            updateBadge();
+            alert('تمت إضافة ' + name + ' إلى السلة!');
+        }
+    </script>
+     <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - NetZone مستلزمات الشبكات</p>
+    </footer>
+</body>
+</html>

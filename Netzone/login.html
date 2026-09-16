@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - NetZone</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+    <!-- الهيدر الموحد لجميع الصفحات -->
+    <header>
+        <div class="logo">NetZone <span>مستلزمات الشبكات</span></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="cart.html">🛒 السلة <span id="header-cart-count" class="cart-badge">0</span></a>
+            <a href="faq.html">الأسئلة الشائعة</a>
+            <a href="contact.html">تواصل معنا</a>
+            <a href="login.html">تسجيل الدخول</a>
+        </nav>
+    </header>
+
+    <!-- محتوى صفحة تسجيل الدخول -->
+    <div class="container">
+        <h1 class="section-title"> تسجيل الدخول</h1>
+
+        <div class="form-card">
+            <!-- عند الضغط على تسجيل الدخول سينقله مباشرة إلى index.html -->
+            <form action="index.html" method="GET">
+                <div class="form-group">
+                    <label>البريد الإلكتروني:</label>
+                    <input type="email" name="email" placeholder="example@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>كلمة المرور:</label>
+                    <input type="password" name="password" placeholder="********" required>
+                </div>
+
+                <button type="submit" class="btn-main" style="width: 100%;">دخول</button>
+            </form>
+
+            <!-- رابط لإنشاء حساب جديد (يمكن توجيهه لصفحة تسجيل أو تبديل) -->
+            <a href="register.html" class="form-toggle-link">ليس لديك حساب؟ إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - NetZone مستلزمات الشبكات</p>
+    </footer>
+
+</body>
+</html>

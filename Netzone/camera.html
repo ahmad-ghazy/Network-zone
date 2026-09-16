@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>كاميرات المراقبة - NetZone</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>.cart-badge { background-color: #ef4444; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; }</style>
+</head>
+<body onload="updateBadge()">
+
+  <!-- الهيدر الموحد لجميع الصفحات -->
+<header>
+    <div class="logo">NetZone <span>مستلزمات الشبكات</span></div>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="products.html">المنتجات</a>
+        <a href="cart.html">🛒 السلة <span id="header-cart-count" class="cart-badge">0</span></a>
+        <a href="faq.html">الأسئلة الشائعة</a>
+        <a href="contact.html">تواصل معنا</a>
+        <a href="login.html">تسجيل الدخول</a>
+    </nav>
+</header>
+
+    <div class="container">
+        <h1 class="section-title">قسم كاميرات المراقبة</h1>
+
+        <div class="grid">
+            <div class="card">
+                <img src="imge/cam1.png" alt="كاميرا">
+                <h3>كاميرا IP الخارجية 4K</h3>
+                <p>المنافذ: PoE RJ45 / رؤية ليلية</p>
+                <div class="price">450 ريال</div>
+                <button class="btn-main" onclick="addToCart('كاميرا IP الخارجية 4K', 450, 'images/cam1.jpg')">إضافة إلى السلة</button>
+            </div>
+            <div class="card">
+                <img src="imge/cam2.png" alt="كاميرا">
+                <h3>طقم 4 كاميرات + NVR</h3>
+                <p>المنافذ: 4 منافذ PoE + HDMI</p>
+                <div class="price">1600 ريال</div>
+                <button class="btn-main" onclick="addToCart('طقم 4 كاميرات + NVR', 1600, 'images/cam2.jpg')">إضافة إلى السلة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('netzone_cart')) || [];
+        function updateBadge() {
+            document.getElementById('header-cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
+        }
+        function addToCart(name, price, img) {
+            let item = cart.find(i => i.name === name);
+            if (item) item.qty++; else cart.push({ name: name, price: price, image: img, qty: 1 });
+            localStorage.setItem('netzone_cart', JSON.stringify(cart));
+            updateBadge();
+            alert('تمت إضافة ' + name + ' إلى السلة!');
+        }
+    </script>
+     <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - NetZone مستلزمات الشبكات</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,525 @@
+
+* {
+    box-sizing: border-box;
+    /*تجعل ابعاد العناصر ثابت ومتحكم به*/
+    margin: 0;
+    /* padding: 0; */
+   
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333333;
+    direction: rtl;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    /* max-width: 1100px; */
+    width: 100%;
+    margin: 20px auto;
+    padding: 0 15px;
+    /* flex: 1; */
+}
+/* 
+.section-title {
+    color: #1a365d;
+    margin-bottom: 20px;
+    font-size: 22px;
+    border-right: 4px solid #2563eb;
+    padding-right: 10px;
+} */
+
+/* ==========================================
+   2. الهيدر وشريط التنقل المتجاوب
+   ========================================== */
+header {
+    background-color: #1a365d;
+    color: white;
+    padding: 15px 10%;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    /* flex-wrap: wrap; */
+    gap: 10px;
+  
+}
+
+header .logo {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+header .logo span {
+    font-size: 30px;
+    color: #93c5fd;
+    display: block;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+   
+}
+
+nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: 900;
+  
+}
+
+nav a:hover {
+    color: #60a5fa;
+}
+
+.cart-badge {
+    background-color: #ef4444;
+    color: white;
+    font-size: 15px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* ==========================================
+   3. البطاقة الرئيسية (Hero Card) في الرئيسية
+   ========================================== */
+.hero-card {
+    background: #ffffff;
+   
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 20px;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.05); */
+}
+
+/* .hero-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+} */
+
+.hero-text h1 {
+    font-size: 45px;
+    color: #1a365d;
+    line-height: 1.3;
+}
+
+.hero-text p {
+    font-size: 25px;
+    color: #424851;
+    line-height: 2;
+}
+
+.hero-image {
+    /* flex: 1; */
+    max-width: 600px;
+    /* display: flex; */
+    /* justify-content: center; */
+}
+
+.hero-image img {
+    max-width: 100%;
+    /* height: auto; */
+    border-radius: 20px;
+    /* object-fit: cover; */
+}
+
+.info-card {
+    background: #ffffff;
+    /* border: 1px solid #e5e7eb; */
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.info-card p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    /* margin-bottom: 15px; */
+}
+
+/* الأزرار العامة الموحدة لمنع التداخل */
+.btn-main {
+    display: inline-block;
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn-main:hover {
+    background-color: #1d4ed8;
+}
+
+/* ==========================================
+   4. شبكة المنتجات (CSS Grid الحقيقي والمتلائم)
+   ========================================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    /* width: 100%; */
+   
+}
+
+.card {
+    background: #ffffff;
+    border: 1px  #1036a7;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+  
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 25px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.card p, .card .details {
+    font-size: 15px;
+    color: #0645c3;
+    margin-bottom: 10px;
+}
+
+.card .price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d97706;
+    margin-bottom: 12px;
+}
+
+/* .card .btn-main {
+    width: 100%;
+} */
+
+/* ==========================================
+   5. التصنيفات (Categories Grid)
+   ========================================== */
+.categories-grid {
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    /* gap: 50px; */
+    /* margin-bottom: 25px; */
+}
+
+/* .category-card {
+    background: #1a365d;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    transition: background 0.2s;
+} */
+
+/* .category-card:hover {
+    background: #2563eb;
+} */
+
+/* .select-container {
+    margin-bottom: 20px;
+} */
+
+/* .product-select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    font-size: 13px;
+    background: #fff;
+} */
+
+/* ==========================================
+   6. صفحة السلة (Cart Layout & Table)
+   ========================================== */
+.cart-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .cart-wrapper {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    align-items: flex-start;
+} */
+
+.cart-table {
+  
+    width: 100%;
+    border-collapse: collapse;/*يدمج الحدود*/
+    background-color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 6px;
+    /* overflow: hidden; */
+   
+}
+
+.cart-table th {
+    background-color: #1a365d;
+    color: #ffffff;
+    padding: 12px;
+    font-weight: 600;
+}
+
+.cart-table td {
+    padding: 12px;
+    /* border-bottom: 1px  #e5e7eb; */
+    /* vertical-align: middle; */
+}
+
+.qty-input {
+    width: 50px;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.btn-delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+}
+
+.cart-summary {
+   
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+  
+}
+
+.cart-summary h3 {
+    color: #1a365d;
+    font-size: 26px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+}
+
+.cart-summary h2 {
+    margin: 15px 0;
+    font-size: 22px;
+}
+
+/* ==========================================
+   7. النوافذ المنبثقة ونماذج الدخول
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 15px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    /* position: relative; */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-pay {
+    width: 100%;
+    background-color: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 25px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 40px auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.form-toggle-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #2563eb;
+    cursor: pointer;
+}
+
+/* ==========================================
+   8. صفحة الأسئلة الشائعة (FAQ)
+   ========================================== */
+.faq-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.faq-question {
+    background-color: #ffffff;
+    color: #1a365d;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-answer {
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ==========================================
+   9. الفوتر
+   ========================================== */
+footer {
+    background-color: #1a365d;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+    margin-top: auto;
+}
+
+/* ==========================================
+   10. التجاوب مع الشاشات (Media Queries)
+   ========================================== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    header nav {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .hero-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cart-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

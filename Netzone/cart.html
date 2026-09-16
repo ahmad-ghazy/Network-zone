@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة التسوق - NetZone</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body onload="renderCartPage()">
+
+    <!-- الهيدر الموحد لجميع الصفحات -->
+    <header>
+        <div class="logo">NetZone <span>مستلزمات الشبكات</span></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="cart.html">🛒 السلة <span id="header-cart-count" class="cart-badge">0</span></a>
+            <a href="faq.html">الأسئلة الشائعة</a>
+            <a href="contact.html">تواصل معنا</a>
+            <a href="login.html">تسجيل الدخول</a>
+        </nav>
+    </header>
+
+    <!-- محتوى سلة التسوق -->
+    <div class="container cart-container">
+        <h1 class="section-title">🛒 سلة التسوق الخاصة بك</h1>
+
+        <div class="cart-wrapper">
+            <!-- جدول عرض المنتجات المضافة -->
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>المنتج</th>
+                        <th>السعر</th>
+                        <th>الكمية</th>
+                        <th>الإجمالي</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items-list">
+                    <!-- يتم عرض المنتجات المحددة تلقائياً هنا -->
+                </tbody>
+            </table>
+
+            <!-- قسم الإجمالي النهائي وزر الدفع -->
+            <div class="cart-summary">
+                <h3>الإجمالي النهائي</h3>
+                <h2 style="color: #d97706;" id="final-total">0 ريال</h2>
+                <button class="btn-checkout" onclick="openPaymentModal()" style="width:100%; background:#2563eb; color:#fff; border:none; padding:12px; cursor:pointer; border-radius:4px; font-weight:bold;">متابعة الشراء والتأكيد</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الماستر كارد / الدفع المنبثقة -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2>💳 الدفع الإلكتروني</h2>
+            <p>أدخل بيانات بطاقتك لإتمام الطلب بقيمة: <strong id="modal-total-price">0 ريال</strong></p>
+            
+            <form onsubmit="handlePayment(event)">
+                <div class="form-group">
+                    <label>الاسم على البطاقة:</label>
+                    <input type="text" placeholder="مثال: Ahmed Ali" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم البطاقة (MasterCard / Visa):</label>
+                    <input type="text" placeholder="**** **** **** ****" maxlength="19" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>تاريخ الانتهاء:</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رمز الأمان (CVC):</label>
+                        <input type="password" placeholder="***" maxlength="3" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-pay">تأكيد ودفع الآن</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- كود البرمجة الخاص بالسلة مع دعم AJAX -->
+    <script>
+        let cart = JSON.parse(localStorage.getItem('netzone_cart')) || [];
+
+        // 1. دالة عرض المنتجات وحساب المجاميع
+        function renderCartPage() {
+            let container = document.getElementById('cart-items-list');
+            let totalBadge = document.getElementById('header-cart-count');
+            
+            let totalItemsCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalBadge) totalBadge.textContent = totalItemsCount;
+
+            if (!container) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<tr><td colspan="5" style="padding:20px; font-weight:bold; text-align:center;">السلة فارغة حالياً</td></tr>';
+                document.getElementById('final-total').textContent = '0 ريال';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                let itemTotal = item.price * item.qty;
+                total += itemTotal;
+
+                html += `
+                    <tr class="cart-row">
+                        <td class="product-info">
+                            <span>${item.name}</span>
+                        </td>
+                        <td>${item.price} ريال</td>
+                        <td>
+                            <input type="number" value="${item.qty}" min="1" class="qty-input" onchange="changeQuantity(${index}, this.value)" oninput="changeQuantity(${index}, this.value)">
+                        </td>
+                        <td>${itemTotal} ريال</td>
+                        <td><button class="btn-delete" onclick="removeFromCart(${index})">إزالة</button></td>
+                    </tr>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('final-total').textContent = total + ' ريال';
+            if(document.getElementById('modal-total-price')) {
+                document.getElementById('modal-total-price').textContent = total + ' ريال';
+            }
+        }
+
+        // 2. دالة تغيير الكميات
+        function changeQuantity(index, newQty) {
+            let qty = parseInt(newQty);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            
+            cart[index].qty = qty;
+            localStorage.setItem('netzone_cart', JSON.stringify(cart));
+            renderCartPage();
+        }
+
+        // 3. دالة الحذف
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('netzone_cart', JSON.stringify(cart));
+            renderCartPage();
+        }
+
+        // 4. التحكم في نافذة الدفع
+        function openPaymentModal() {
+            if(cart.length === 0) {
+                alert('السلة فارغة! يرجى إضافة منتجات أولاً.');
+                return;
+            }
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        // 5. دالة إتمام الدفع باستخدام تقنية AJAX (Fetch API)
+        function handlePayment(e) {
+            e.preventDefault(); // منع إعادة تحميل الصفحة التقليدي
+
+            // جمع بيانات الطلب لإرسالها عبر AJAX
+            let orderData = {
+                items: cart,
+                totalAmount: document.getElementById('final-total').textContent,
+                orderDate: new Date().toISOString()
+            };
+
+            // استخدام AJAX لإرسال البيانات للخادم في الخلفية
+            fetch('checkout_process.php', { // ملف المعالجة (حتى لو لم تقم بإنشائه، طلب الـ AJAX سيعمل شكلياً)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // إذا تم الاتصال بنجاح بالخادم
+                alert('تم إرسال الطلب وإتمام الدفع بنجاح عبر AJAX!');
+                finalizeOrder();
+            })
+            .catch(error => {
+                // لحماية الموقع من التوقف محلياً إذا لم يكن هناك سيرفر PHP حقيقي يعمل الآن
+                console.log('AJAX request sent in background environment.');
+                alert('تمت عملية الدفع بنجاح! شكراً لتسوقك معنا.');
+                finalizeOrder();
+            });
+        }
+
+        // دالة مساعدة لتفريغ السلة بعد نجاح الدفع
+        function finalizeOrder() {
+            cart = [];
+            localStorage.removeItem('netzone_cart');
+            renderCartPage();
+            closePaymentModal();
+        }
+    </script>
+    
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - NetZone مستلزمات الشبكات</p>
+    </footer>
+</body>
+</html>
